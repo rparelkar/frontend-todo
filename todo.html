@@ -1,7 +1,40 @@
 <html>
     <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.2.0/tailwind.min.css" type="text/css" media="screen" charset="utf-8">
-        
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js"></script>        
+        <script type="text/javascript">
+            function toDoList() {
+    return {
+        newTodo: "",
+        todos: [],
+        addToDo() {
+            this.todos.push({
+                todo: this.newTodo,
+                completed: false
+            });
+
+            this.newTodo = "";
+        },
+        toggleToDoCompleted(index) {
+            this.todos[index].completed = !this.todos[index].completed;
+        },
+        deleteToDo(index) {
+            this.todos = this.todos.filter((todo, todoIndex) => {
+                return index !== todoIndex
+            })
+        },
+        numberOfToDosCompleted() {
+            return this.todos.filter(todo => todo.completed).length;
+        },
+        toDoCount() {
+            return this.todos.length
+        },
+        isLastToDo(index) {
+            return this.todos.length - 1 === index
+        }
+    };
+}
+        </script>
     </head>
     <body class="antialiased w-screen h-screen bg-white pt-8">
         <div x-data="toDoList()" class="max-w-2xl mx-auto px-12 py-8 rounded-lg shadow-lg bg-gray-200">
