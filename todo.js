@@ -2,6 +2,7 @@ function toDoList() {
     return {
         newTodo: "",
         todos: [],
+        initVar: 1,
         addToDo() {
             this.todos.push({
                 todo: this.newTodo,
@@ -9,9 +10,7 @@ function toDoList() {
             });
 
             this.newTodo = "";
-            if(this.readCookie()){
-                this.writeCookie('todoStorage', JSON.stringify(this.todos))
-            }
+            this.writeCookie('todoStorage', JSON.stringify(this.todos))
         },
         toggleToDoCompleted(index) {
             this.todos[index].completed = !this.todos[index].completed;
@@ -32,11 +31,14 @@ function toDoList() {
             return this.todos.length - 1 === index
         },
         readCookie(){
-            console.log('reading cookie..');
-            cookies = decodeURIComponent(document.cookie).split(';');
-            todoCookies = cookies.filter(cookie => cookie === 'todoStorage')
-            todos = todoCookies.value
-            return true;
+            if(this.initVar){
+                console.log('reading cookie..');
+                // todoCookies = document.cookie.match(new RegExp('(^| )' + 'todoStorage' + '=([^;]+)'));
+                todoCookies = [{"todo":"hey","completed":false},{"todo":"hi","completed":false},{"todo":"how are you?","completed":false}];
+                console.log(todoCookies)
+                this.todos = todoCookies
+                this.initVar = 0;
+            }
         },
         writeCookie(name, value) {
             console.log('writing cookie..');
