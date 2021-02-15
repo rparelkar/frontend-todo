@@ -33,16 +33,16 @@ function toDoList() {
         readCookie(){
             if(this.initVar){
                 console.log('reading cookie..');
-                // todoCookies = document.cookie.match(new RegExp('(^| )' + 'todoStorage' + '=([^;]+)'));
-                todoCookies = [{"todo":"hey","completed":false},{"todo":"hi","completed":false},{"todo":"how are you?","completed":false}];
-                console.log(todoCookies)
-                this.todos = todoCookies
+                todoCookies = document.cookie.match(new RegExp('(^| )' + 'todoStorage' + '=([^;]+)'));
+                //todoCookies = [{"todo":"hey","completed":false},{"todo":"hi","completed":false},{"todo":"how are you?","completed":false}];
+                if(todoCookies){
+                    this.todos = JSON.parse(todoCookies[2])
+                }
                 this.initVar = 0;
             }
         },
         writeCookie(name, value) {
             console.log('writing cookie..');
-            console.log("name = " + name + ", value = " + value);
             // Build the set-cookie string:
             cookie_string = name + " = " + value + "; path=/; max-age=31536000";
             // Create/update the cookie:
